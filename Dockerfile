@@ -1,13 +1,10 @@
-FROM python:3.6-alpine
+FROM python:3.6-alpine AS dev
 
 WORKDIR /src/app/
 
 COPY ./requirements.txt .
-
-RUN ["pip", "install", "-r", "./requirements.txt"]
+RUN pip install -r ./requirements.txt
 
 COPY . .
 
-RUN addgroup -S projects && adduser -S -H projects -G projects
-RUN chown -R projects:projects /src/app
-USER projects
+CMD ["flask", "run", "-h", "0.0.0.0"]
